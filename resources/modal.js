@@ -3,9 +3,12 @@ $(document).ready(function() {
     $('.img-modal').on('click', function() {
         // Get the source of the clicked image
         var imgSrc = $(this).attr('src');
+        var caption = $(this).attr('alt');
 
-        // Set the source of the modal image
+        // Set the source and caption of the modal image
         $('#modalImage').attr('src', imgSrc);
+        $('#caption').text(caption); // Set the caption text
+
 
         // Show the modal
         $('#imageModal').modal('show');
