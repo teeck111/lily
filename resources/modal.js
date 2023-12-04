@@ -1,16 +1,33 @@
-$(document).ready(function() {
-    // Attach a click event to all elements with the 'img-modal' class
-    $('.img-modal').on('click', function() {
-        // Get the source of the clicked image
-        var imgSrc = $(this).attr('src');
-        var caption = $(this).attr('alt');
+class ImageModal {
+  constructor(modal, modalImg) {
+    this.modal = modal;
+    this.modalImg = modalImg;
+  }
 
-        // Set the source and caption of the modal image
-        $('#modalImage').attr('src', imgSrc);
-        $('#caption').text(caption); // Set the caption text
+  openModal(imageSrc) {
+    this.modal.style.display = 'block';
+    this.modalImg.src = imageSrc;
+  }
 
+  closeModal() {
+    this.modal.style.display = 'none';
+  }
+}
 
-        // Show the modal
-        $('#imageModal').modal('show');
-    });
+const modal = document.getElementById('myModal');
+const modalImg = document.getElementById('modalImg');
+const images = document.querySelectorAll('.gallery-image');
+
+const imgModal = new ImageModal(modal, modalImg);
+
+images.forEach((image) => {
+  image.addEventListener('click', () => {
+    imgModal.openModal(image.src);
+  });
+});
+
+window.addEventListener('click', (event) => {
+  if (event.target === modal) {
+    imgModal.closeModal();
+  }
 });

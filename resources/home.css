@@ -1,7 +1,12 @@
 .main {
     position: relative;
     text-align: center;
-    color: white;
+    color: rgb(39, 31, 31);
+}
+
+.text {
+    color: rgb(39, 31, 31) !important;
+    font-family: Cochin;
 }
 
 .centered {
@@ -13,93 +18,72 @@
 }
 
 .bio {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 2.5vw;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    color: rgb(39, 31, 31) !important;
+    font-family: Cochin;
+    font-size: 2.1vw;
+    margin-top: 50px;
+    margin-bottom: 50px;
     margin-left: 10%;
     margin-right: 10%;
 }
 
 body {
-    background-color: #FFEEF4 !important;
+    background-color: #ffffff !important;
 }
 
 
 #myImg:hover {opacity: 0.7;}
 
 /* The Modal (background) */
+/* Style the gallery images */
+
+
+/* Style the gallery images */
+
+.gallery-image:hover {
+    opacity: 0.7;
+}
+
+/* The Modal (background) */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 10px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100% !important; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(239, 238, 238, 0.95);
 }
 
-/* Modal Content (Image) */
-.modal-content {
-  width: 100% !important; 
-  border-radius: 5px !important;
-  max-width: 90% !important;
-  background-color: rgb(247, 247, 248) !important;
-  
-}
-.modal-body {
-  border-radius: 5px !important;
-  padding: 0px !important; 
-  padding-bottom: 10px !important;
+/* Modal Content */
+.modal-cont {
+    animation-name: zoom;
+    animation-duration: 0.6s;
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
 }
 
-/* Caption of Modal Image (Image Text) - Same Width as the Image */
-#caption {
-  margin: auto;
-  display: block;
-  width: 80%;
-  max-width: 700px;
-  text-align: center;
-  color: #2c2a2a;
-  padding: 10px 0;
-  height: 50px;
-}
 
-/* Add Animation - Zoom in the Modal */
-.modal-content, #caption {
-  animation-name: zoom;
-  animation-duration: 0.6s;
-}
-
-@keyframes zoom {
-  from {transform:scale(0)}
-  to {transform:scale(1)}
-}
-
-/* The Close Button */
-.close {
-  position: absolute;
-  top: 15px;
-  right: 35px;
-  color: #f1f1f1;
-  font-size: 40px;
-  font-weight: bold;
-  transition: 0.3s;
-}
 
 .close:hover,
 .close:focus {
-  color: #bbb;
-  text-decoration: none;
-  cursor: pointer;
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-/* 100% Image Width on Smaller Screens */
-@media only screen and (max-width: 700px){
-  .modal-content {
-    width: 100%;
-  }
+/* Zoom Animation */
+@keyframes zoom {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
 }
