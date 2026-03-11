@@ -69,6 +69,48 @@ function exitAdminMode() {
   destroySortable();
 }
 
+// --- Auto-scroll while dragging ---
+
+let autoScrollRAF = null;
+let dragCursorY = 0;
+const SCROLL_ZONE = 120;   // px from edge to trigger scroll
+const SCROLL_SPEED = 6;    // px per frame (smooth and slow)
+
+function onDragMove(evt) {
+  dragCursorY = (evt.touches ? evt.touches[0].clientY : evt.clientY);
+}
+
+function autoScrollLoop() {
+  const vh = window.innerHeight;
+
+  if (dragCursorY < SCROLL_ZONE) {
+    // Near top — scroll up (faster the closer to the edge)
+    const intensity = 1 - (dragCursorY / SCROLL_ZONE);
+    window.scrollBy(0, -SCROLL_SPEED * intensity);
+  } else if (dragCursorY > vh - SCROLL_ZONE) {
+    // Near bottom — scroll down
+    const intensity = 1 - ((vh - dragCursorY) / SCROLL_ZONE);
+    window.scrollBy(0, SCROLL_SPEED * intensity);
+  }
+
+  autoScrollRAF = requestAnimationFrame(autoScrollLoop);
+}
+
+function startAutoScroll() {
+  document.addEventListener('mousemove', onDragMove);
+  document.addEventListener('touchmove', onDragMove, { passive: true });
+  autoScrollRAF = requestAnimationFrame(autoScrollLoop);
+}
+
+function stopAutoScroll() {
+  document.removeEventListener('mousemove', onDragMove);
+  document.removeEventListener('touchmove', onDragMove);
+  if (autoScrollRAF) {
+    cancelAnimationFrame(autoScrollRAF);
+    autoScrollRAF = null;
+  }
+}
+
 // --- Drag and Drop (SortableJS) ---
 
 function initSortable() {
@@ -84,7 +126,8 @@ function initSortable() {
       chosenClass: 'sortable-chosen',
       dragClass: 'sortable-drag',
       handle: '.col',
-      onEnd: saveSortOrder
+      onStart: startAutoScroll,
+      onEnd: (evt) => { stopAutoScroll(); saveSortOrder(); }
     });
     sortableInstances.push(instance);
   });
@@ -95,7 +138,8 @@ function initSortable() {
     animation: 150,
     ghostClass: 'sortable-ghost',
     handle: '.gallery-row',
-    onEnd: saveSortOrder
+    onStart: startAutoScroll,
+    onEnd: (evt) => { stopAutoScroll(); saveSortOrder(); }
   });
   sortableInstances.push(rowSortable);
 }
