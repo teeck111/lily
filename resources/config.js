@@ -9,6 +9,6 @@
 // Leave both empty for local development (falls back to localhost)
 
 const CONFIG = {
-  CLOUDINARY_GALLERY_URL: '',
-  RENDER_API_URL: ''
+  CLOUDINARY_GALLERY_URL: 'https://res.cloudinary.com/dfgclexkm/raw/upload/lily-gallery/gallery',
+  RENDER_API_URL: 'https://lily-6bcj.onrender.com'
 };
