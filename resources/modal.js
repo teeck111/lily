@@ -65,6 +65,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     e.preventDefault();
 
     const targetId = this.getAttribute('href');
+    if (!targetId || targetId === '#') return;
     const targetElement = document.querySelector(targetId);
 
     if (targetElement) {

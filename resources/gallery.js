@@ -3,12 +3,11 @@
 let galleryData = [];
 
 async function loadGallery() {
-  // Try sources in order: Cloudinary URL, local API, local file
-  const sources = [
-    CONFIG.CLOUDINARY_GALLERY_URL,
-    '/api/gallery',
-    'gallery.json'
-  ].filter(Boolean);
+  // Try sources in order: Cloudinary URL, then local gallery.json file
+  // Only try /api/gallery if no Cloudinary URL is configured (local dev)
+  const sources = CONFIG.CLOUDINARY_GALLERY_URL
+    ? [CONFIG.CLOUDINARY_GALLERY_URL, 'gallery.json']
+    : ['/api/gallery', 'gallery.json'];
 
   for (const url of sources) {
     try {
