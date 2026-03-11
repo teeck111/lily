@@ -4,7 +4,9 @@ let galleryData = [];
 
 async function loadGallery() {
   try {
-    const res = await fetch('/api/gallery');
+    // Use Cloudinary URL if configured (GitHub Pages), otherwise fall back to local API
+    const url = CONFIG.CLOUDINARY_GALLERY_URL || '/api/gallery';
+    const res = await fetch(url);
     galleryData = await res.json();
     renderGallery();
   } catch (err) {

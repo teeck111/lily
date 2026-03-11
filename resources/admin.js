@@ -16,12 +16,16 @@ function hideLoginPrompt() {
   document.getElementById('admin-login-error').style.display = 'none';
 }
 
+function apiUrl(path) {
+  return (CONFIG.RENDER_API_URL || '') + path;
+}
+
 async function attemptLogin() {
   const password = document.getElementById('admin-password-input').value;
   if (!password) return;
 
   try {
-    const res = await fetch('/api/login', {
+    const res = await fetch(apiUrl('/api/login'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password })
@@ -44,7 +48,7 @@ async function attemptLogin() {
 async function logout() {
   if (adminToken) {
     try {
-      await fetch('/api/logout', {
+      await fetch(apiUrl('/api/logout'), {
         method: 'POST',
         headers: { 'X-Admin-Token': adminToken }
       });
@@ -123,7 +127,7 @@ async function saveSortOrder() {
   galleryData = newData;
 
   try {
-    await fetch('/api/gallery', {
+    await fetch(apiUrl('/api/gallery'), {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -152,7 +156,7 @@ async function handleUpload(event) {
   }
 
   try {
-    const res = await fetch('/api/upload', {
+    const res = await fetch(apiUrl('/api/upload'), {
       method: 'POST',
       headers: { 'X-Admin-Token': adminToken },
       body: formData
@@ -177,7 +181,7 @@ async function handleUpload(event) {
 
 async function deletePhoto(src) {
   try {
-    const res = await fetch('/api/photo', {
+    const res = await fetch(apiUrl('/api/photo'), {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

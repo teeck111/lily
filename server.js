@@ -37,6 +37,15 @@ const upload = multer({
   limits: { fileSize: 20 * 1024 * 1024 } // 20MB max
 });
 
+// CORS — allow requests from GitHub Pages
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, X-Admin-Token');
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
+  next();
+});
+
 app.use(express.json());
 
 // Serve static files
