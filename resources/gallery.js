@@ -3,11 +3,20 @@
 let galleryData = [];
 
 async function loadGallery() {
-  // Try sources in order: Cloudinary URL, then local gallery.json file
-  // Only try /api/gallery if no Cloudinary URL is configured (local dev)
-  const sources = CONFIG.CLOUDINARY_GALLERY_URL
-    ? [CONFIG.CLOUDINARY_GALLERY_URL, 'gallery.json']
-    : ['/api/gallery', 'gallery.json'];
+  const isAdmin = document.body.classList.contains('admin-mode');
+  const renderApi = CONFIG.RENDER_API_URL ? CONFIG.RENDER_API_URL + '/api/gallery' : null;
+
+  let sources;
+  if (isAdmin && renderApi) {
+    // In admin mode, always fetch from Render (has the latest data)
+    sources = [renderApi];
+  } else if (CONFIG.CLOUDINARY_GALLERY_URL) {
+    // Public visitor: try Cloudinary, then local file
+    sources = [CONFIG.CLOUDINARY_GALLERY_URL, 'gallery.json'];
+  } else {
+    // Local dev
+    sources = ['/api/gallery', 'gallery.json'];
+  }
 
   for (const url of sources) {
     try {
