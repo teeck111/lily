@@ -3,15 +3,26 @@
 let galleryData = [];
 
 async function loadGallery() {
-  try {
-    // Use Cloudinary URL if configured (GitHub Pages), otherwise fall back to local API
-    const url = CONFIG.CLOUDINARY_GALLERY_URL || '/api/gallery';
-    const res = await fetch(url);
-    galleryData = await res.json();
-    renderGallery();
-  } catch (err) {
-    console.error('Failed to load gallery:', err);
+  // Try sources in order: Cloudinary URL, local API, local file
+  const sources = [
+    CONFIG.CLOUDINARY_GALLERY_URL,
+    '/api/gallery',
+    'gallery.json'
+  ].filter(Boolean);
+
+  for (const url of sources) {
+    try {
+      const res = await fetch(url);
+      if (res.ok) {
+        galleryData = await res.json();
+        renderGallery();
+        return;
+      }
+    } catch (err) {
+      // Try next source
+    }
   }
+  console.error('Failed to load gallery from any source');
 }
 
 function renderGallery() {
