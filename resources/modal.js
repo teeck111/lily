@@ -58,31 +58,7 @@ class ImageModal {
   }
 }
 
-// Get modal and images
-const modal = document.getElementById('myModal');
-const modalImg = document.getElementById('modalImg');
-const images = document.querySelectorAll('.gallery-image');
-
-// Create ImageModal instance
-const imgModal = new ImageModal(modal, modalImg);
-
-// Get image sources and set them in ImageModal
-const imageSources = Array.from(images).map((image) => image.src);
-imgModal.setImages(imageSources);
-
-// Add click event listeners to images
-images.forEach((image, index) => {
-  image.addEventListener('click', () => {
-    imgModal.openModal(index);
-  });
-});
-
-// Add click event listener to close the modal
-window.addEventListener('click', (event) => {
-  if (event.target === modal) {
-    imgModal.closeModal();
-  }
-});
+// Note: Modal initialization is handled by gallery.js after dynamic rendering
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
